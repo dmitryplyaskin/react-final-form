@@ -53,6 +53,7 @@ function ReactFinalForm<FormValues: FormValuesShape>({
   subscription = all,
   validate,
   validateOnBlur,
+  unsubscribeForm = true,
   ...rest
 }: Props<FormValues>) {
   const config: Config<FormValues> = {
@@ -108,7 +109,7 @@ function ReactFinalForm<FormValues: FormValuesShape>({
 
     return () => {
       form.pauseValidation() // pause validation so we don't revalidate on every field deregistration
-      unsubscriptions.reverse().forEach(unsubscribe => unsubscribe())
+      unsubscribeForm && unsubscriptions.reverse().forEach(unsubscribe => unsubscribe())
       // don't need to resume validation here; either unmounting, or will re-run this hook with new deps
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
